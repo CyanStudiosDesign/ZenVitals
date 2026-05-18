@@ -1,0 +1,83 @@
+import React, { Suspense } from "react"
+
+import ImageGallery from "@modules/products/components/image-carousel"
+import ProductActions from "@modules/products/components/product-actions"
+import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
+import ProductTabs from "@modules/products/components/product-tabs"
+import RelatedProducts from "@modules/products/components/related-products"
+import ProductInfo from "@modules/products/templates/product-info"
+import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
+import { notFound } from "next/navigation"
+import { HttpTypes } from "@medusajs/types"
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "components/ui/drawer"
+
+import ProductActionsWrapper from "./product-actions-wrapper"
+
+type ProductTemplateProps = {
+  product: HttpTypes.StoreProduct
+  region: HttpTypes.StoreRegion
+  countryCode: string
+  images: HttpTypes.StoreProductImage[]
+}
+
+const ProductTemplate: React.FC<ProductTemplateProps> = ({
+  product,
+  region,
+  countryCode,
+  images,
+}) => {
+  if (!product || !product.id) {
+    return notFound()
+  }
+  console.log(product)
+  return (
+    <>
+      <div
+        className=" px-10 w-full grid grid-cols-1 lg:grid-cols-5 gap-12 small:flex-row small:items-start py-6 relative"
+        data-testid="product-container"
+      >
+        <div className="w-full col-span-3">
+          <ImageGallery images={images} />
+        </div>
+
+        <div className="flex col-span-2 flex-col small:sticky small:top-48 small:py-0  w-full py-8 gap-y-12 px-6">
+          <ProductInfo product={product} />
+
+          <ProductOnboardingCta />
+          <Suspense
+            fallback={
+              <ProductActions
+                disabled={true}
+                product={product}
+                region={region}
+              />
+            }
+          >
+            <ProductActionsWrapper id={product.id} region={region} />
+          </Suspense>
+
+          <ProductTabs product={product} />
+        </div>
+      </div>
+      <div
+        className="content-container my-16 small:my-32"
+        data-testid="related-products-container"
+      >
+        <Suspense fallback={<SkeletonRelatedProducts />}>
+          <RelatedProducts product={product} countryCode={countryCode} />
+        </Suspense>
+      </div>
+    </>
+  )
+}
+
+export default ProductTemplate

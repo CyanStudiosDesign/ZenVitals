@@ -1,0 +1,68 @@
+import { Suspense } from "react"
+
+import { listRegions } from "@lib/data/regions"
+import { listLocales } from "@lib/data/locales"
+import { getLocale } from "@lib/data/locale-actions"
+import { StoreRegion } from "@medusajs/types"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import CartButton from "@modules/layout/components/cart-button"
+import SideMenu from "@modules/layout/components/side-menu"
+import { Menu, ShoppingBag, User } from "lucide-react"
+
+export default async function Nav() {
+  const [regions, locales, currentLocale] = await Promise.all([
+    listRegions().then((regions: StoreRegion[]) => regions),
+    listLocales(),
+    getLocale(),
+  ])
+
+  return (
+    <div className="sticky top-0 inset-x-0 z-50 group">
+      <header className="relative h-16 mx-auto border-b duration-200 bg-white ">
+        <nav className="px-8 flex justify-start w-full h-full ">
+          <div className=" basis-0 h-full flex items-center">
+            <div className="h-full">
+              <SideMenu
+                regions={regions}
+                locales={locales}
+                currentLocale={currentLocale}
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center h-full pl-8">
+            <LocalizedClientLink href="/" data-testid="nav-store-link">
+              <img src="/WLogo.png" className="h-16"></img>
+            </LocalizedClientLink>
+          </div>
+
+          <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
+            <div className="hidden small:flex items-center gap-x-6 h-full">
+              <LocalizedClientLink
+                className=""
+                href="/account"
+                data-testid="nav-account-link"
+              >
+                <User className="h-5 w-5" />
+              </LocalizedClientLink>
+            </div>
+            <Suspense
+              fallback={
+                <LocalizedClientLink
+                  className=" flex gap-2"
+                  href="/cart"
+                  data-testid="nav-cart-link"
+                >
+                  <ShoppingBag className="h-5 w-5" />
+                  (0)
+                </LocalizedClientLink>
+              }
+            >
+              <CartButton />
+            </Suspense>
+          </div>
+        </nav>
+      </header>
+    </div>
+  )
+}
