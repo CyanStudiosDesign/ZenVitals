@@ -60,7 +60,7 @@ export function ReportScreen({ answers, data }: ReportScreenProps) {
 
   return (
     <div className="w-full mx-auto pb-20 px-4 mt-10">
-      <div className="flex flex-col justify-between lg:flex-row gap-16">
+      <div className="flex flex-col justify-between lg:flex-row ">
         {/* 1. STICKY SIDEBAR (Hims Design) */}
         <aside className="hidden lg:block w-64 shrink-0">
           <div className="sticky top-24">
@@ -113,11 +113,6 @@ export function ReportScreen({ answers, data }: ReportScreenProps) {
                 Vitality Summary:
               </h4>
               <ul className="space-y-4">
-                <li className="flex gap-3 text-zinc-600 text-sm leading-relaxed">
-                  <span className="text-black font-bold">•</span>
-                  Your overall vitality score is{" "}
-                  <strong className="text-zinc-900">{score}%</strong>.
-                </li>
                 <li className="flex gap-1 text-zinc-600 text-sm leading-relaxed">
                   <span className="text-black font-bold">•</span>
                   Analysis suggests
@@ -131,7 +126,7 @@ export function ReportScreen({ answers, data }: ReportScreenProps) {
           </header>
 
           {/* Blog Sections */}
-          <div className="space-y-24">
+          <div className="space-y-12">
             {narrative.map((section, i) => (
               <article
                 key={section.category}
@@ -167,19 +162,21 @@ export function ReportScreen({ answers, data }: ReportScreenProps) {
             {/* Protocol Section */}
             <section
               id="protocol"
-              className="scroll-mt-32 pt-16 border-t border-zinc-100"
+              className="scroll-mt-16 border-t border-zinc-100"
             >
               <h3 className="text-3xl font-bold text-gray-900 mb-8 font-outfit tracking-tight">
                 Recommended Protocol
               </h3>
-              <div className="grid gap-4">
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 w-full place-content-center">
                 {recommendations.map((product: any) => (
                   <div
                     key={product.id}
-                    className="flex items-center gap-6 p-6 bg-white rounded-[2rem] border border-zinc-100 shadow-sm hover:shadow-md transition-shadow"
+                    className="flex  items-center flex-col gap-6 p-6 bg-white rounded-2xl border border-zinc-100 shadow-sm hover:shadow-md transition-shadow"
                   >
-                    <span className="text-5xl">{product.emoji}</span>
-                    <div className="flex-1">
+                    <span className="text-5xl w-full aspect-square bg-black rounded-2xl">
+                      {product.emoji}
+                    </span>
+                    <div className="flex-1 w-full">
                       <h4 className="font-bold text-gray-900 text-lg">
                         {product.name}
                       </h4>
@@ -187,13 +184,23 @@ export function ReportScreen({ answers, data }: ReportScreenProps) {
                         {product.desc}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-emerald-600 font-bold text-lg">
-                        ₹{product.price}
-                      </p>
-                      <button className="mt-2 text-[10px] font-bold text-zinc-400 uppercase hover:text-zinc-900">
-                        Details
-                      </button>
+                    <div className=" w-full flex justify-between">
+                      <p className=" font-bold text-lg">₹{product.price}</p>
+                      <div className="h-12 w-12 bg-zinc-900 rounded-full flex items-center justify-center text-white transition-all duration-200  group-hover:-translate-y-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14m-7-7 7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 ))}

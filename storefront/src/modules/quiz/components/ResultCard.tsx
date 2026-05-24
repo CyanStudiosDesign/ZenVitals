@@ -18,7 +18,16 @@ export const ResultCard = ({ report, onClick, onDelete }: ResultCardProps) => {
       return "bg-violet-50 text-violet-600 border-violet-100"
     return "bg-orange-50 text-orange-600 border-orange-100"
   }
-
+  // Logic to check if the timestamp matches the current calendar day
+  const isToday = (ts: number) => {
+    const date = new Date(ts)
+    const today = new Date()
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    )
+  }
   const formatTime = (ts: number) =>
     new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
 
@@ -50,7 +59,8 @@ export const ResultCard = ({ report, onClick, onDelete }: ResultCardProps) => {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-[10px] font-bold text-zinc-400 tracking-tighter">
-                TODAY, {formatDate(report.timestamp)}
+                {isToday(report.timestamp) ? "TODAY, " : ""}
+                {formatDate(report.timestamp)}
               </span>
             </div>
             <h3 className="text-xl font-bold text-zinc-900 font-outfit capitalize">

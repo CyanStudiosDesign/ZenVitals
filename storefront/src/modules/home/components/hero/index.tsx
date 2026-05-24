@@ -9,6 +9,7 @@ import {
 } from "lucide-react"
 import FeaturedProducts from "../featured-products"
 import FeaturedSection from "../featured-section"
+import Testimonial from "components/blocks/testimonial/Testimonial"
 
 const Hero = () => {
   return (
@@ -116,50 +117,7 @@ const Hero = () => {
       {/* Featured Products Section */}
 
       {/* Testimonials Section */}
-      <section className="bg-[#F8F8F8] py-20 px-6 md:px-12 mt-20">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            <Quote className="h-12 w-12 text-black mb-6 fill-black" />
-            <h3 className="text-2xl md:text-4xl font-bold leading-tight max-w-md">
-              I never realized how poor my sleep was until I started tracking
-              it. Now I wake up fresher and know exactly what helps me rest
-              better.
-            </h3>
-            <div className="mt-8 flex items-center gap-4">
-              <div className="h-12 w-12 rounded-full bg-gray-300 overflow-hidden" />
-              <div>
-                <p className="font-bold text-sm">Angela Summer</p>
-                <p className="text-xs text-gray-500">Book Writer</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-4xl p-8 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-8">
-            <div className="w-full md:w-1/2 aspect-square rounded-2xl bg-gray-100 overflow-hidden">
-              <img
-                src="/sleep-woman.jpg"
-                alt="Woman with coffee"
-                className="object-cover w-full h-full"
-              />
-            </div>
-            <div className="w-full md:w-1/2 flex flex-col justify-between space-y-6">
-              <div className="space-y-4">
-                <div className="text-xs italic text-gray-600">
-                  "This app showed me how small habits like staying up too
-                  late—were affecting my sleep..."
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="h-6 w-6 rounded-full bg-gray-200" />
-                  <span className="text-[10px] font-bold">Karen Smith</span>
-                </div>
-              </div>
-              <button className="text-xs font-bold border-b border-black self-start pb-1">
-                See More Sleeping Stories
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Testimonial />
 
       {/* Blog Section */}
       <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">

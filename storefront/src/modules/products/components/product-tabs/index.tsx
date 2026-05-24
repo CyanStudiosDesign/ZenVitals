@@ -3,8 +3,13 @@
 import Back from "@modules/common/icons/back"
 import FastDelivery from "@modules/common/icons/fast-delivery"
 import Refresh from "@modules/common/icons/refresh"
-import Accordion from "./accordion"
 import { HttpTypes } from "@medusajs/types"
+import {
+  AccordionContent,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+} from "components/ui/accordion"
 
 type ProductTabsProps = {
   product: HttpTypes.StoreProduct
@@ -52,18 +57,25 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
 
   return (
     <div className="w-full">
-      <Accordion type="multiple">
+      <Accordion>
         {tabs
           .filter((tab) => tab.show)
           .map((tab, i) => (
-            <Accordion.Item
+            <AccordionItem
               key={i}
-              title={tab.label}
-              headingSize="medium"
-              value={tab.label}
+              value={i.toString()}
+              className="border-b border-gray-300 py-4 first:border-t-0"
             >
-              {tab.component}
-            </Accordion.Item>
+              <AccordionTrigger className="flex w-full items-center justify-between gap-4 text-left">
+                <span className="text-xl font-medium text-gray-900">
+                  {tab.label}
+                </span>
+              </AccordionTrigger>
+
+              <AccordionContent className="s pr-8 leading-relaxed text-gray-500">
+                {tab.component}
+              </AccordionContent>
+            </AccordionItem>
           ))}
       </Accordion>
     </div>

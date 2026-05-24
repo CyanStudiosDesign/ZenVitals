@@ -7,9 +7,10 @@ import { retrieveCustomer } from "@lib/data/customer"
 import { getBaseURL } from "@lib/util/env"
 import { StoreCartShippingOption } from "@medusajs/types"
 import CartMismatchBanner from "@modules/layout/components/cart-mismatch-banner"
-import Footer from "@modules/layout/templates/footer"
 import Nav from "@modules/layout/templates/nav"
 import FreeShippingPriceNudge from "@modules/shipping/components/free-shipping-price-nudge"
+import Footer from "components/blocks/footer/Footer"
+import MobileFooter from "components/blocks/footer/MobileFooter"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
@@ -44,6 +45,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       )}
       <main className={inter.className}>{props.children}</main>
       <Footer />
+      <MobileFooter />
     </>
   )
 }

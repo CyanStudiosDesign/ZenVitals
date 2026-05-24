@@ -263,45 +263,57 @@ export const PRODUCTS: Product[] = [
 // ─── 1. THE STARTING POINT ──────────────────────────────────────────────────
 export const PRIMARY_QUESTION: Question = {
   id: "primary_concern",
-  text: "What's your primary health concern?",
-  sub: "Select all that apply",
+  text: "What's your primary health goal today?",
+  sub: "Select all that apply to personalize your report",
   type: "multi",
   options: [
     {
       value: "hair",
       label: "Hair & Scalp",
       icon: "💇",
-      desc: "Thinning, fallout, or scalp issues",
+      desc: "Thinning, hair fall, or scalp issues",
     },
     {
-      value: "testosterone",
-      label: "Testosterone",
-      icon: "⚡",
-      desc: "Low drive, strength, or vitality",
-    },
-    {
-      value: "sleep",
-      label: "Sleep Quality",
-      icon: "🌙",
-      desc: "Trouble falling or staying asleep",
+      value: "skin",
+      label: "Skin & Glow",
+      icon: "✨",
+      desc: "Anti-aging, pigmentation, or dullness",
     },
     {
       value: "energy",
-      label: "Low Energy",
-      icon: "🔋",
-      desc: "Fatigue, brain fog, or exhaustion",
+      label: "Energy & Vitality",
+      icon: "⚡",
+      desc: "Fatigue, mid-day crashes, or low stamina",
     },
     {
-      value: "stress",
-      label: "Stress & Anxiety",
-      icon: "🧠",
-      desc: "Overwhelm, burnout, or mood issues",
+      value: "bone_joint",
+      label: "Bone & Joint",
+      icon: "🦴",
+      desc: "Mobility, stiffness, or calcium support",
     },
     {
-      value: "immunity",
-      label: "Immunity",
+      value: "gut_immunity",
+      label: "Gut & Immunity",
       icon: "🛡️",
-      desc: "Frequent illness or slow recovery",
+      desc: "Digestion, bloating, or frequent illness",
+    },
+    {
+      value: "heart_brain",
+      label: "Heart & Brain",
+      icon: "❤️",
+      desc: "Focus, memory, or cardiovascular health",
+    },
+    {
+      value: "womens_wellness",
+      label: "Women's Wellness",
+      icon: "🌸",
+      desc: "Hormonal balance, PMS, or iron support",
+    },
+    {
+      value: "mens_performance",
+      label: "Men's Performance",
+      icon: "🏋️‍♂️",
+      desc: "Physical stamina, drive, and vitality",
     },
   ],
 }
@@ -458,20 +470,345 @@ export const HAIR_DIAGNOSTIC_QUESTIONS: Question[] = [
     ],
   },
 ]
+// ─── 2B. SKIN & GLOW DIAGNOSTICS ────────────────────────────────────────────
+export const SKIN_QUESTIONS: Question[] = [
+  {
+    id: "skin_concern",
+    text: "What is your main skin concern?",
+    sub: "Helps us target cellular repair",
+    type: "single",
+    options: [
+      {
+        value: "aging",
+        label: "Fine Lines & Aging",
+        icon: "⏳",
+        desc: "Loss of elasticity",
+      },
+      {
+        value: "pigmentation",
+        label: "Pigmentation & Dullness",
+        icon: "🌑",
+        desc: "Uneven tone or lack of glow",
+      },
+      {
+        value: "sun_damage",
+        label: "Sun Damage",
+        icon: "☀️",
+        desc: "UV exposure effects",
+      },
+      {
+        value: "acne",
+        label: "Acne & Inflammation",
+        icon: "🔴",
+        desc: "Breakouts or redness",
+      },
+    ],
+  },
+  {
+    id: "environmental_stress",
+    text: "What environmental stressors are you exposed to?",
+    sub: "Select all that apply",
+    type: "multi",
+    options: [
+      { value: "pollution", label: "City Pollution", icon: "🏙️" },
+      { value: "sun", label: "Heavy Sun Exposure", icon: "🌞" },
+      { value: "screens", label: "Digital Screens (Blue Light)", icon: "💻" },
+    ],
+  },
+]
 
-/**
- * TESTOSTERONE & ENERGY BUNDLES
- * (Placeholder for when you add specific diagnostic questions)
- */
-export const TESTOSTERONE_QUESTIONS: Question[] = []
-export const SLEEP_QUESTIONS: Question[] = []
+// ─── 2C. ENERGY & VITALITY DIAGNOSTICS ──────────────────────────────────────
+export const ENERGY_QUESTIONS: Question[] = [
+  {
+    id: "energy_pattern",
+    text: "When do you feel the most fatigued?",
+    sub: "Identifies mitochondrial vs adrenal fatigue",
+    type: "single",
+    options: [
+      {
+        value: "morning_crash",
+        label: "Hard to wake up",
+        icon: "🌅",
+        desc: "Morning grogginess",
+      },
+      {
+        value: "afternoon_slump",
+        label: "Afternoon Slump",
+        icon: "📉",
+        desc: "Crash around 2-4 PM",
+      },
+      {
+        value: "all_day",
+        label: "Exhausted all day",
+        icon: "🔋",
+        desc: "Constant low energy",
+      },
+      {
+        value: "physical",
+        label: "Physical Fatigue",
+        icon: "🏋️",
+        desc: "Muscles feel weak/tired",
+      },
+    ],
+  },
+  {
+    id: "stress_level",
+    text: "How would you rate your daily stress levels?",
+    sub: "Chronic stress depletes essential minerals",
+    type: "single",
+    options: [
+      { value: "1", label: "Low", icon: "😌", desc: "I manage it well" },
+      {
+        value: "3",
+        label: "Moderate",
+        icon: "😐",
+        desc: "Noticeable, but functioning",
+      },
+      { value: "4", label: "High", icon: "😰", desc: "Often overwhelming" },
+      {
+        value: "5",
+        label: "Severe",
+        icon: "🔥",
+        desc: "Burnout / Constant anxiety",
+      },
+    ],
+  },
+  {
+    id: "sleep_duration",
+    text: "How many hours of quality sleep do you get?",
+    sub: "Crucial for recovery scoring",
+    type: "single",
+    options: [
+      { value: "gt8", label: "8+ hours", icon: "😴" },
+      { value: "7-8", label: "7-8 hours", icon: "🌙" },
+      { value: "5-6", label: "5-6 hours", icon: "🥱" },
+      { value: "lt5", label: "Less than 5 hours", icon: "🦉" },
+    ],
+  },
+]
+// ─── 2D. BONE & JOINT DIAGNOSTICS ───────────────────────────────────────────
+export const BONE_JOINT_QUESTIONS: Question[] = [
+  {
+    id: "joint_issue",
+    text: "What describes your mobility concerns best?",
+    sub: "Helps us target calcium vs inflammation",
+    type: "single",
+    options: [
+      {
+        value: "stiffness",
+        label: "Morning Stiffness",
+        icon: "🦴",
+        desc: "Takes a while to get moving",
+      },
+      {
+        value: "pain",
+        label: "Joint Pain",
+        icon: "⚡",
+        desc: "Discomfort during movement",
+      },
+      {
+        value: "bone_density",
+        label: "Bone Density",
+        icon: "📉",
+        desc: "Concerns about weak bones/osteoporosis",
+      },
+      {
+        value: "recovery",
+        label: "Workout Recovery",
+        icon: "🏃",
+        desc: "Soreness after exercise",
+      },
+    ],
+  },
+]
+
+// ─── 2E. GUT & IMMUNITY DIAGNOSTICS ─────────────────────────────────────────
+export const GUT_IMMUNITY_QUESTIONS: Question[] = [
+  {
+    id: "gut_issue",
+    text: "Do you experience any of these digestive issues?",
+    sub: "Gut health dictates nutrient absorption",
+    type: "single",
+    options: [
+      { value: "bloating", label: "Bloating & Gas", icon: "🎈" },
+      { value: "irregular", label: "Irregularity", icon: "🚽" },
+      { value: "sensitivity", label: "Food Sensitivities", icon: "🍞" },
+      { value: "none", label: "My gut is fine", icon: "✅" },
+    ],
+  },
+  {
+    id: "immunity_frequency",
+    text: "How often do you get sick or feel run down?",
+    sub: "Measures immune resilience",
+    type: "single",
+    options: [
+      {
+        value: "frequent",
+        label: "Frequently",
+        icon: "🤒",
+        desc: "Catch every bug going around",
+      },
+      {
+        value: "slow_recovery",
+        label: "Slow Recovery",
+        icon: "🐢",
+        desc: "When I get sick, it lingers",
+      },
+      {
+        value: "seasonal",
+        label: "Seasonally",
+        icon: "🍂",
+        desc: "Usually when the weather changes",
+      },
+      {
+        value: "rarely",
+        label: "Rarely",
+        icon: "💪",
+        desc: "I have a strong immune system",
+      },
+    ],
+  },
+  {
+    id: "diet",
+    text: "What is your primary diet type?",
+    sub: "Helps us identify potential nutritional gaps",
+    type: "single",
+    options: [
+      { value: "veg", label: "Vegetarian", icon: "🥗" },
+      { value: "vegan", label: "Vegan", icon: "🌱" },
+      { value: "nonveg", label: "Omnivore", icon: "🥩" },
+      { value: "keto", label: "Keto / Low Carb", icon: "🥑" },
+    ],
+  },
+]
+
+// ─── 2F. HEART & BRAIN DIAGNOSTICS ──────────────────────────────────────────
+export const HEART_BRAIN_QUESTIONS: Question[] = [
+  {
+    id: "cognitive_concern",
+    text: "Have you noticed any cognitive changes?",
+    sub: "Targets essential fatty acid needs",
+    type: "single",
+    options: [
+      {
+        value: "brain_fog",
+        label: "Brain Fog",
+        icon: "🌫️",
+        desc: "Difficulty concentrating",
+      },
+      {
+        value: "memory",
+        label: "Memory Retention",
+        icon: "🧠",
+        desc: "Forgetfulness",
+      },
+      {
+        value: "focus",
+        label: "Lack of Focus",
+        icon: "🎯",
+        desc: "Hard to stay on task",
+      },
+      { value: "none", label: "Mental clarity is good", icon: "✅" },
+    ],
+  },
+  {
+    id: "cardio_concern",
+    text: "Do you have cardiovascular health goals?",
+    sub: "For heart muscle and circulation support",
+    type: "single",
+    options: [
+      { value: "cholesterol", label: "Cholesterol Balance", icon: "⚖️" },
+      {
+        value: "circulation",
+        label: "Blood Circulation",
+        icon: "🩸",
+        desc: "Cold hands/feet",
+      },
+      {
+        value: "longevity",
+        label: "Heart Longevity",
+        icon: "❤️",
+        desc: "General heart protection",
+      },
+    ],
+  },
+]
+
+// ─── 2G. WOMEN'S WELLNESS DIAGNOSTICS ───────────────────────────────────────
+export const WOMENS_QUESTIONS: Question[] = [
+  {
+    id: "womens_primary",
+    text: "What is your primary wellness focus?",
+    sub: "Tailors our hormonal and iron support",
+    type: "single",
+    options: [
+      { value: "pms", label: "PMS & Cycle Comfort", icon: "🩸" },
+      {
+        value: "hormonal",
+        label: "Hormonal Balance",
+        icon: "⚖️",
+        desc: "Mood swings, breakouts",
+      },
+      {
+        value: "iron",
+        label: "Iron / Hemoglobin Support",
+        icon: "🧲",
+        desc: "Anemia or fatigue",
+      },
+      { value: "bone", label: "Bone Strength", icon: "🦴" },
+    ],
+  },
+]
+
+// ─── 2H. MEN'S PERFORMANCE DIAGNOSTICS ──────────────────────────────────────
+export const MENS_QUESTIONS: Question[] = [
+  {
+    id: "mens_primary",
+    text: "Where are you looking to improve performance?",
+    sub: "Targets stamina and testosterone support",
+    type: "single",
+    options: [
+      {
+        value: "stamina",
+        label: "Physical Stamina",
+        icon: "🏃",
+        desc: "Endurance during activities",
+      },
+      {
+        value: "libido",
+        label: "Drive & Libido",
+        icon: "🔥",
+        desc: "Aphrodisiac support",
+      },
+      {
+        value: "recovery",
+        label: "Muscle Recovery",
+        icon: "💪",
+        desc: "Post-workout repair",
+      },
+      {
+        value: "focus",
+        label: "Mental Edge",
+        icon: "🧠",
+        desc: "Sharpness and clarity",
+      },
+    ],
+  },
+]
+
+// ─── 3. GLOBAL BUNDLE REGISTRY ───────────────────────────────────────────
 
 // ─── 3. GLOBAL BUNDLE REGISTRY ───────────────────────────────────────────
 
 export const QUESTION_BUNDLES: Record<string, Question[]> = {
   hair: HAIR_DIAGNOSTIC_QUESTIONS,
-  testosterone: TESTOSTERONE_QUESTIONS,
-  sleep: SLEEP_QUESTIONS,
+  skin: SKIN_QUESTIONS,
+  energy: ENERGY_QUESTIONS,
+  bone_joint: BONE_JOINT_QUESTIONS,
+  gut_immunity: GUT_IMMUNITY_QUESTIONS,
+  heart_brain: HEART_BRAIN_QUESTIONS,
+  womens_wellness: WOMENS_QUESTIONS,
+  mens_performance: MENS_QUESTIONS,
 }
 
 // ─── 4. LIFESTYLE QUESTIONS (THE FINALE) ───────────────────────────────────
