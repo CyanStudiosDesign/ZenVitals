@@ -1,6 +1,7 @@
 import { loadEnv, defineConfig } from "@medusajs/framework/utils";
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
+
 export default defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -13,18 +14,17 @@ export default defineConfig({
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
     },
   },
-  modules: [
-    {
-      resolve: "@medusajs/auth",
+  // ✅ In v2, modules is an OBJECT, not an array
+  modules: {
+    auth: {
       options: {
         providers: [
-          // 1. Re-add the standard Email/Password provider
           {
             resolve: "@medusajs/medusa/auth-emailpass",
             id: "emailpass",
           },
           {
-            resolve: "@medusajs/auth-google", // Matches the package name
+            resolve: "@medusajs/auth-google",
             id: "google",
             options: {
               clientId: process.env.GOOGLE_CLIENT_ID,
@@ -35,5 +35,5 @@ export default defineConfig({
         ],
       },
     },
-  ],
+  },
 });
