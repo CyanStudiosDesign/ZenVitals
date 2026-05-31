@@ -120,7 +120,7 @@ const Hero = () => {
       <Testimonial />
 
       {/* Blog Section */}
-      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">
+      {/*<section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-10">
           <h2 className="text-4xl font-extrabold italic uppercase tracking-tighter">
             From the Blog
@@ -169,6 +169,7 @@ const Hero = () => {
           ))}
         </div>
       </section>
+      */}
     </div>
   )
 }

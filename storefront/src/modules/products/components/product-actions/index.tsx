@@ -43,6 +43,9 @@ export default function ProductActions({
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const safetyData = JSON.parse(product?.metadata?.safety_info || "{}")
+  console.log("info")
+  console.log(safetyData)
 
   useEffect(() => {
     if (product.variants?.length === 1) {
@@ -168,116 +171,131 @@ export default function ProductActions({
         )}
       </button>
 
-      <button
-        className="text-zinc-600 underline text-sm hover:text-black hover:font-medium transition-all duration-200 "
-        onClick={() => setIsDrawerOpen(true)}
-      >
-        Important safety information
-      </button>
+      {/* Conditionally render safety info section to prevent crashes */}
+      {safetyData && (
+        <>
+          <button
+            className="text-zinc-600 underline text-sm hover:text-black hover:font-medium transition-all duration-200 "
+            onClick={() => setIsDrawerOpen(true)}
+          >
+            Important safety information
+          </button>
 
-      <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-        <div className="font-sans text-zinc-900 max-w-3xl mx-auto mb-16">
-          {/* Header Section from image_ae5702.jpg */}
-          <header className="mb-10">
-            <h1 className="text-5xl font-medium tracking-tight mb-4 flex items-start">
-              Foundayo<span className="text-xl ml-0.5 mt-1">®</span>
-            </h1>
-            <p className="text-zinc-600  text-xl leading-relaxed font-normal">
-              Your safety is our first priority. Learn more about key medication
-              details, side effects, and other important info about your
-              treatment.
-            </p>
-          </header>
+          <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+            <div className="font-sans text-zinc-900 max-w-3xl mx-auto mb-16">
+              <header className="mb-10">
+                <h1 className="text-5xl font-medium tracking-tight mb-4 flex items-start">
+                  {safetyData.brand_name || product.title}
+                  {safetyData.is_registered_trademark && (
+                    <span className="text-xl ml-0.5 mt-1">®</span>
+                  )}
+                </h1>
+                <p className="text-zinc-600 text-xl leading-relaxed font-normal">
+                  {safetyData.subtitle}
+                </p>
+              </header>
 
-          <section className="space-y-10">
-            {/* Prescribing Info */}
-            <div>
-              <h2 className="text-3xl font-semibold mb-4 tracking-tight">
-                Prescribing information
-              </h2>
-              <ul className="list-disc ml-6">
-                <li className="text-zinc-700 text-lg decoration-zinc-400 underline underline-offset-4 cursor-pointer hover:text-black">
-                  black box warning
-                </li>
-              </ul>
-            </div>
+              <section className="space-y-10">
+                {/* Prescribing / Document Info 
+                {safetyData.documents && safetyData.documents.length > 0 && (
+                  <div>
+                    <h2 className="text-3xl font-semibold mb-4 tracking-tight">
+                      Product Information
+                    </h2>
+                    <ul className="list-disc ml-6">
+                      {safetyData.documents.map((doc: any, index: number) => (
+                        <li
+                          key={index}
+                          className="text-zinc-700 text-lg decoration-zinc-400 underline underline-offset-4 cursor-pointer hover:text-black capitalize"
+                        >
+                          <a
+                            href={doc.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {doc.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+*/}
+                {/* Side Effects List */}
+                {safetyData.side_effects &&
+                  safetyData.side_effects.length > 0 && (
+                    <div>
+                      <h2 className="text-3xl font-semibold mb-4 tracking-tight">
+                        Potential side effects
+                      </h2>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-3 ml-6 list-disc text-zinc-700 text-lg">
+                        {safetyData.side_effects.map(
+                          (effect: string, index: number) => (
+                            <li key={index}>{effect}</li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
 
-            {/* Side Effects List from image_ae5702.jpg */}
-            <div>
-              <h2 className="text-3xl font-semibold mb-4 tracking-tight">
-                Common side effects
-              </h2>
-              <ul className="grid grid-cols-1 gap-y-3 ml-6 list-disc text-zinc-700 text-lg">
-                <li>Nausea</li>
-                <li>Stomach (abdominal) pain</li>
-                <li>Heartburn</li>
-                <li>Constipation</li>
-                <li>Headache</li>
-                <li>Gas</li>
-                <li>Diarrhea</li>
-                <li>Swollen belly</li>
-                <li>Hair loss</li>
-                <li>Vomiting</li>
-              </ul>
-            </div>
-
-            {/* Safety Information from image_ae5719.png */}
-            <div className="pt-10 border-t border-zinc-200 ">
-              <h2 className="text-3xl font-semibold mb-4 tracking-tight">
-                Important safety information
-              </h2>
-              <p className="text-zinc-700 text-lg leading-relaxed mb-6">
-                FOUNDAYO is a prescription medicine used with a reduced-calorie
-                diet and increased physical activity to help adults with
-                obesity, or some adults with overweight who also have
-                weight-related medical problems, to lose excess body weight and
-                keep the weight off.
-              </p>
-
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-2xl font-semibold mb-3 tracking-tight">
-                    Limitations of Use:
-                  </h3>
-                  <ul className="list-disc ml-6 space-y-3 text-zinc-700 text-lg">
-                    <li>
-                      FOUNDAYO should not be used with other GLP-1 receptor
-                      agonist medicines.
-                    </li>
-                    <li>
-                      It is not known if FOUNDAYO is safe and effective for use
-                      in children.
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Warning Box */}
-                <div className="bg-zinc-50 p-6 rounded-xl border border-zinc-100 ">
-                  <p className="font-bold text-zinc-900  uppercase tracking-wider text-sm mb-3">
-                    WARNING: RISK OF THYROID C-CELL TUMORS
+                {/* Safety Information */}
+                <div className="pt-10 border-t border-zinc-200">
+                  <h2 className="text-3xl font-semibold mb-4 tracking-tight">
+                    Important safety information
+                  </h2>
+                  <p className="text-zinc-700 text-lg leading-relaxed mb-6">
+                    {safetyData.general_safety}
                   </p>
-                  <p className="text-zinc-600  text-base leading-relaxed mb-4">
-                    See full prescribing information for complete boxed warning.
-                  </p>
-                  <ul className="list-disc ml-6 space-y-3 text-zinc-600  text-base">
-                    <li>
-                      It is not known if FOUNDAYO will cause thyroid tumors, or
-                      a type of thyroid cancer called medullary thyroid
-                      carcinoma (MTC) in people.
-                    </li>
-                    <li>
-                      Do not take FOUNDAYO if you or any of your family have
-                      ever had a type of thyroid cancer called MTC, or if you
-                      have an endocrine system condition called Multiple
-                      Endocrine Neoplasia syndrome type 2 (MEN 2).
-                    </li>
-                  </ul>
+
+                  <div className="space-y-6">
+                    {/* Limitations of Use */}
+                    {safetyData.limitations &&
+                      safetyData.limitations.length > 0 && (
+                        <div>
+                          <h3 className="text-2xl font-semibold mb-3 tracking-tight">
+                            Limitations of Use:
+                          </h3>
+                          <ul className="list-disc ml-6 space-y-3 text-zinc-700 text-lg">
+                            {safetyData.limitations.map(
+                              (limitation: string, index: number) => (
+                                <li key={index}>{limitation}</li>
+                              )
+                            )}
+                          </ul>
+                        </div>
+                      )}
+
+                    {/* Dynamic Warning Boxes */}
+                    {safetyData.warnings &&
+                      safetyData.warnings.map((warning: any, index: number) => (
+                        <div
+                          key={index}
+                          className="bg-zinc-50 p-6 rounded-xl border border-zinc-200"
+                        >
+                          <p className="font-bold text-zinc-900 uppercase tracking-wider text-sm mb-3">
+                            {warning.title}
+                          </p>
+                          {warning.subtitle && (
+                            <p className="text-zinc-600 text-base leading-relaxed mb-4">
+                              {warning.subtitle}
+                            </p>
+                          )}
+                          <ul className="list-disc ml-6 space-y-3 text-zinc-600 text-base">
+                            {warning.points.map(
+                              (point: string, idx: number) => (
+                                <li key={idx}>{point}</li>
+                              )
+                            )}
+                          </ul>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              </div>
+              </section>
             </div>
-          </section>
-        </div>
-      </Drawer>
+          </Drawer>
+        </>
+      )}
 
       {/* Mobile Actions */}
       <MobileActions

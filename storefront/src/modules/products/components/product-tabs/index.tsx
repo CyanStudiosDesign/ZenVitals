@@ -158,7 +158,7 @@ const ShippingInfoTab = () => {
           <div>
             <span className="font-semibold">Fast delivery</span>
             <p className="max-w-sm">
-              Your package will arrive in 3-5 business days at your pick up
+              Your package will arrive in 7 business days at your pick up
               location or in the comfort of your home.
             </p>
           </div>
@@ -166,10 +166,9 @@ const ShippingInfoTab = () => {
         <div className="flex items-start gap-x-2">
           <Refresh />
           <div>
-            <span className="font-semibold">Bioavailability</span>
+            <span className="font-semibold">Returns</span>
             <p className="max-w-sm text-ui-fg-subtle">
-              Formulated with digestive enzymes to ensure nutrients are easily
-              absorbed.
+              Not available for this product.
             </p>
           </div>
         </div>
@@ -177,10 +176,7 @@ const ShippingInfoTab = () => {
           <Back />
           <div>
             <span className="font-semibold">Quality Guarantee</span>
-            <p className="max-w-sm text-ui-fg-subtle">
-              Every batch of Nutrilong is clinically formulated and tested for
-              purity.
-            </p>
+            <p className="max-w-sm text-ui-fg-subtle">Approved by FSSAI</p>
           </div>
         </div>
       </div>

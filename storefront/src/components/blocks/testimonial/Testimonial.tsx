@@ -51,18 +51,18 @@ function TestimonialCard({ name, role, quote, image }: CardProps) {
 
 const testimonials: CardProps[] = [
   {
-    name: "Karen Smith",
-    role: "Entrepreneur",
+    name: "Seenu",
+    role: "Software Engineer",
     quote:
-      "This website is amazing that it tracked my daily routine using an AI algorithm and provided the information that i needed to improve also it suggested the health products in the website itself",
-    image: "/testimonial-images/Woman1.jpg",
+      "What I love most about ZenVitals is that they don't just sell you products; they actually educate you. Between the top-tier quality of the supplements and their new blog section full of deep dives into nutrition and wellness, I feel so much more informed and empowered about my health journey.",
+    image: "/default-pfp.png",
   },
   {
-    name: "Jessica Wise",
-    role: "Book Writer",
+    name: "Shishir Chaudhary",
+    role: "Student",
     quote:
       "I have been using the products from this website for a while now and I am really impressed with the quality and effectiveness of the products. I highly recommend it to anyone looking for health and wellness products.",
-    image: "/testimonial-images/Woman3.jpeg",
+    image: "/default-pfp.png",
   },
 ]
 
@@ -85,22 +85,22 @@ export default function Testimonial() {
           </svg>
 
           <p className="my-5 mb-6.5 max-w-155 text-[clamp(1.25rem,2vw,2rem)] font-bold leading-[1.12] tracking-normal max-sm:max-w-none max-sm:text-[1.1rem]">
-            I never realized how weak i am but using the ZenVitals company
-            products has really helped my daily life and i am so grateful for
-            the amazing products that they have to offer.
+            I used to get so overwhelmed trying to figure out which vitamins I
+            actually needed. The quiz recommendation system completely changed
+            the game for me.
           </p>
 
           <div className={authorRow}>
             <Image
-              src="/testimonial-images/Woman1.jpg"
-              alt="Angela Summer"
+              src="/default-pfp.png"
+              alt="Jairaj Berryr"
               width={48}
               height={48}
               className="h-12 w-12 rounded-full object-cover"
             />
             <div>
-              <h2 className={authorName}>Angela Summer</h2>
-              <p className={authorRole}>Book Writer</p>
+              <h2 className={authorName}>Jairaj Berry</h2>
+              <p className={authorRole}>Student</p>
             </div>
           </div>
         </div>
@@ -116,8 +116,8 @@ export default function Testimonial() {
               priority
             />
             <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,transparent,rgba(238,245,245,0.82))]" />
-            <button className="absolute bottom-7 left-1/2 z-1 min-w-56 -translate-x-1/2 cursor-pointer rounded-full border-0 bg-[rgba(238,242,242,0.92)] px-6 py-3.25 text-[0.8rem] leading-none font-bold text-[#151718] shadow-[0_14px_26px_rgba(83,98,102,0.12)] max-sm:w-[calc(100%-36px)] max-sm:min-w-0">
-              See More Stories About Us
+            <button className="absolute bottom-7 left-1/2 z-1 min-w-56 -translate-x-1/2 cursor-default rounded-full border-0 bg-[rgba(238,242,242,0.92)] px-6 py-3.25 text-[0.8rem] leading-none font-bold text-[#151718] shadow-[0_14px_26px_rgba(83,98,102,0.12)] max-sm:w-[calc(100%-36px)] max-sm:min-w-0">
+              Testimonials
             </button>
           </div>
 

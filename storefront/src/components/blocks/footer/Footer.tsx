@@ -5,9 +5,63 @@ import {
   legalLinks,
   iconsLink,
   copyrightText,
-} from "./data/data"
-import Image from "next/image"
-import MobileFooter from "./MobileFooter"
+} from "lib/data/footer"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../../ui/accordion"
+
+// src/lib/data/footer.ts
+import { listCategories } from "@lib/data/categories"
+import { listCollections } from "@lib/data/collections"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+
+export async function getCombinedFooterData() {
+  // 1. Fetch dynamic data from Medusa
+  const [{ collections }, productCategories] = await Promise.all([
+    listCollections({ fields: "*products" }),
+    listCategories(),
+  ])
+
+  // 2. Format Categories (Top-level only, sliced to 6)
+  const categoryItems = (productCategories || [])
+    .filter((c: any) => !c.parent_category)
+    .slice(0, 6)
+    .map((c: any) => ({
+      title: c.name,
+      link: `/categories/${c.handle}`,
+      // Note: If you need to support nested children in your new map,
+      // you can add a 'children' array here.
+    }))
+
+  // 3. Format Collections (Sliced to 6)
+  const collectionItems = (collections || []).slice(0, 6).map((c: any) => ({
+    title: c.title,
+    link: `/collections/${c.handle}`,
+  }))
+
+  // 4. Create new sections for the footer
+  const dynamicSections = []
+
+  if (categoryItems.length > 0) {
+    dynamicSections.push({
+      heading: "Categories",
+      items: categoryItems,
+    })
+  }
+
+  if (collectionItems.length > 0) {
+    dynamicSections.push({
+      heading: "Collections",
+      items: collectionItems,
+    })
+  }
+
+  // 5. Append dynamicsections to static data
+  return [...footerData, ...dynamicSections]
+}
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -17,56 +71,151 @@ const notoSerifGeorgian = Noto_Serif_Georgian({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
-const Footer = () => {
+const Footer = async () => {
+  const footerData = await getCombinedFooterData()
   return (
     <footer
-      className={`${poppins.className} hidden md:block w-full min-h-[calc(100vh-6rem)] bg-black`}
+      className={`${poppins.className} w-full min-h-[calc(100vh-30rem)] bg-black`}
     >
-      <section className="flex justify-between px-4 py-16">
-        <div className="text-white">left</div>
+      <section className="flex flex-col md:flex-row justify-between px-4 py-16">
+        <div className="text-white flex md:block justify-center">
+          <img src="/logo-w.png" alt="" className="w-64" />
+        </div>
         {/*RIGHT */}
-        <MobileFooter />
+        {/* Accordion sections */}
+        <Accordion className="flex flex-col px-8 md:hidden">
+          {footerData.map((column) => (
+            <AccordionItem
+              key={column.heading}
+              value={column.heading}
+              className="border-b border-zinc-800"
+            >
+              <AccordionTrigger className="w-full flex justify-between items-center py-5 text-white text-lg">
+                <span>{column.heading}</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col gap-4 pb-5 text-white">
+                  {column.items.map((item: any) => (
+                    <LocalizedClientLink
+                      key={item.title}
+                      href={item.link}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {item.title}
+                    </LocalizedClientLink>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+
         {/* Mobile Footer */}
-        <div className=" lg:columns-4 md:columns-2  md:block hidden gap-16 w-[60%] ">
+        <div className=" lg:columns-3 md:columns-2 hidden md:block gap-16 w-[60%] ">
           {footerData.map((column) => (
             <div
               key={column.heading}
               className="flex flex-col break-inside-avoid "
             >
-              <p className="text-zinc-500 text-xs mb-6">{column.heading}</p>
+              <p className="text-zinc-500 text-xs mb-4 mt-8">
+                {column.heading}
+              </p>
               <div className="flex flex-col gap-5 text-white text-md ">
-                {column.items.map((item) => (
-                  <a
+                {column.items.map((item: any) => (
+                  <LocalizedClientLink
                     key={item.title}
                     href={item.link}
                     className="hover:underline cursor-pointer"
                   >
                     {item.title}
-                  </a>
+                  </LocalizedClientLink>
                 ))}
               </div>
             </div>
           ))}
         </div>
       </section>
-      <div className="flex justify-around px-10 my-8">
-        <div className=""></div>
+      <div className="flex flex-col md:flex-row justify-between items-center px-10 my-8 w-full gap-8">
+        {/* cyanstudios card */}
+        <a
+          href={studioCard.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full md:w-auto"
+        >
+          <div className="group bg-zinc-900 rounded-3xl px-4 py-4 w-full md:w-[320px] flex items-center mt-10 md:mt-0 justify-between hover:bg-white transition cursor-pointer">
+            {/* Left side */}
+            <div className="flex items-center gap-4 h-14 pl-8">
+              {/* Imagees 
+              <div className="relative w-14 h-14 rounded-2xl overflow-hidden">
+                <Image
+                  src={studioCard.image}
+                  alt={studioCard.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>*/}
+
+              {/* cyan studios textt */}
+              <div className="flex flex-col gap-1">
+                <h3
+                  className={`${notoSerifGeorgian.className} text-white text-2xl font-bold leading-none group-hover:text-zinc-800 transition`}
+                >
+                  {studioCard.name}
+                </h3>
+
+                <p className="text-zinc-500 text-xs mt-1 pl-2 group-hover:text-zinc-400 transition">
+                  {studioCard.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Rightt icons send  */}
+            <div className="text-white group-hover:text-zinc-900 transition">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 19 22"
+                className="w-6 h-6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  d="M18 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"
+                />
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  d="m11 13 6.5-6.5"
+                />
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13.5 6H18v4.5"
+                />
+              </svg>
+            </div>
+          </div>
+        </a>
         <div className="flex gap-3 items-center justify-center">
           {/* Facebook */}
           <a
-            href={iconsLink.facebook}
+            href={iconsLink.linkedIn}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="h-12 w-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-white transition cursor-pointer pr-1 group ">
+            <span className="h-12 w-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-white transition cursor-pointer group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 120 160"
+                viewBox="0 0 24 24"
                 className="h-5 w-5 text-white group-hover:text-zinc-800 transition"
               >
                 <path
                   fill="currentColor"
-                  d="M89.584 155.139V84.378h23.742l3.562-27.585H89.584V39.184c0-7.984 2.208-13.425 13.67-13.425l14.595-.006V1.08C115.325.752 106.661 0 96.577 0 75.52 0 61.104 12.853 61.104 36.452v20.341H37.29v27.585h23.814v70.761h28.48z"
+                  d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
                 />
               </svg>
             </span>
@@ -105,81 +254,7 @@ const Footer = () => {
               </svg>
             </span>
           </a>
-          {/* TikTok */}
-          <a href={iconsLink.tiktok} target="_blank" rel="noopener noreferrer">
-            <span className="h-12 w-12 rounded-full bg-zinc-800 flex items-center justify-center group cursor-pointer hover:bg-white transition">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="h-5 w-5 text-white group-hover:text-zinc-800 transition"
-              >
-                <path
-                  fill="currentColor"
-                  d="M20.112 10.092a5.339 5.339 0 0 1-4.959-2.39v8.222a6.076 6.076 0 1 1-6.077-6.077c.127 0 .251.012.376.02v2.994c-.125-.015-.247-.038-.376-.038a3.101 3.101 0 0 0 0 6.203c1.713 0 3.226-1.35 3.226-3.063L12.332 2h2.865a5.336 5.336 0 0 0 4.918 4.764v3.328"
-                />
-              </svg>
-            </span>
-          </a>
         </div>
-        {/* cyanstudios card */}
-        <a href={studioCard.link} target="_blank" rel="noopener noreferrer">
-          <div className="group bg-zinc-900 rounded-3xl px-4 py-4 w-[320px] flex items-center   justify-between hover:bg-white transition cursor-pointer">
-            {/* Left side */}
-            <div className="flex items-center  gap-4">
-              {/* Imagees */}
-              <div className="relative w-14 h-14 rounded-2xl overflow-hidden">
-                <Image
-                  src={studioCard.image}
-                  alt={studioCard.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* cyan studios textt */}
-              <div className="flex flex-col">
-                <h3
-                  className={`${notoSerifGeorgian.className} text-white text-2xl font-bold leading-none group-hover:text-zinc-800 transition`}
-                >
-                  {studioCard.name}
-                </h3>
-
-                <p className="text-zinc-500 text-xs mt-1 group-hover:text-zinc-400 transition">
-                  {studioCard.description}
-                </p>
-              </div>
-            </div>
-
-            {/* Rightt icons send  */}
-            <div className="text-white group-hover:text-zinc-900 transition">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 19 22"
-                className="w-6 h-6"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  d="M18 14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  d="m11 13 6.5-6.5"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13.5 6H18v4.5"
-                />
-              </svg>
-            </div>
-          </div>
-        </a>
       </div>
 
       {/* Legal section */}

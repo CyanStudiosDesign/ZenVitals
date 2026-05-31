@@ -45,7 +45,6 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       )}
       <main className={inter.className}>{props.children}</main>
       <Footer />
-      <MobileFooter />
     </>
   )
 }

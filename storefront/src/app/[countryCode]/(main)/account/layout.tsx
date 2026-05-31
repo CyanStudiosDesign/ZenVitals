@@ -13,8 +13,10 @@ export default async function AccountPageLayout({
 
   return (
     <AccountLayout customer={customer}>
-      {customer ? dashboard : login}
-      <Toaster />
+      <div className="mb-10">
+        {customer ? dashboard : login}
+        <Toaster />
+      </div>
     </AccountLayout>
   )
 }
