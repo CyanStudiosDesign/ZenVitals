@@ -16,6 +16,8 @@ export default defineConfig({
   },
   admin: {
     disable: true, // Prevents Railway from building the admin UI
+    backendUrl: process.env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000",
+    path: "/app",
   },
   // ✅ In v2, modules is an OBJECT, not an array
   modules: {
