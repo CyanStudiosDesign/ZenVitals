@@ -14,6 +14,9 @@ export default defineConfig({
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
     },
   },
+  admin: {
+    disable: true, // Prevents Railway from building the admin UI
+  },
   // ✅ In v2, modules is an OBJECT, not an array
   modules: {
     auth: {
