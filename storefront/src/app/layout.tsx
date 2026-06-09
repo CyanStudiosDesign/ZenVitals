@@ -1,6 +1,6 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
-import "../styles/globals.css"
+import "./globals.css"
 import { ToastProvider } from "@lib/context/toast-context"
 
 export const metadata: Metadata = {
