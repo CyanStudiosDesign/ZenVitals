@@ -38,22 +38,5 @@ export default defineConfig({
         ],
       },
     },
-    // 🚀 NESTED FILE MODULE ADDED HERE
-    file: {
-      resolve: "@medusajs/medusa/file",
-      options: {
-        providers: [
-          {
-            resolve: "medusav2-file-supabase-storage/modules/file",
-            id: "supabase",
-            options: {
-              supabaseUrl: process.env.SUPABASE_URL,
-              apiKey: process.env.SUPABASE_KEY,
-              bucketName: process.env.SUPABASE_BUCKET,
-            },
-          },
-        ],
-      },
-    },
   },
 });
