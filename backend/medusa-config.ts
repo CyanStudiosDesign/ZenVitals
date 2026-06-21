@@ -41,7 +41,11 @@ export default defineConfig({
       },
     },
     // 🚀 NESTED FILE MODULE ADDED HERE
-    file: {
+  },
+});
+
+/**
+ * file: {
       resolve: "@medusajs/medusa/file",
       options: {
         providers: [
@@ -57,5 +61,4 @@ export default defineConfig({
         ],
       },
     },
-  },
-});
+ */
