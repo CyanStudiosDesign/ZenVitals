@@ -63,7 +63,10 @@
   },
   "overrides": {
     "react": "19.0.5",
-    "react-dom": "19.0.5"
+    "react-dom": "19.0.5",
+    "@medusajs/ui-preset": {
+      "tailwindcss": "$tailwindcss"
+    }
   },
   "packageManager": "npm@11.5.1"
 }
