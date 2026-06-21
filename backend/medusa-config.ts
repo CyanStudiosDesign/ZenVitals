@@ -23,6 +23,12 @@ export default defineConfig({
   modules: {
     auth: {
       options: {
+        session_cookie: {
+          name: "connect.sid",
+          sameSite: "none", // Must be 'none' for cross-origin
+          secure: true, // Must be true because you are using HTTPS
+          domain: undefined, // Try leaving this undefined first, or set to your root domain (e.g., ".yourdomain.com")
+        },
         providers: [
           {
             resolve: "@medusajs/medusa/auth-emailpass",
