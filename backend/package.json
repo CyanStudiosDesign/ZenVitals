@@ -31,7 +31,8 @@
     "@medusajs/medusa": "^2.15.5",
     "lucide-react": "^1.8.0",
     "medusav2-file-supabase-storage": "^0.1.6",
-    "posthog-node": "^5.35.7"
+    "posthog-node": "^5.35.7",
+    "ws": "^8.21.0"
   },
   "devDependencies": {
     "@medusajs/test-utils": "^2.15.5",
